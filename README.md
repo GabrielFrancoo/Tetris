@@ -1,6 +1,4 @@
-// ...existing code...
-ESTRUTURA BASE DO PROJETO 
-
+🧱 Estrutura Base do Projeto
 src/
 └── com/
     └── seuNomeOuProjeto/
@@ -20,28 +18,24 @@ src/
         │
         └── Main.java       ← ponto de entrada do programa
 
-🧩 Função de cada pacote:
+🧩 Função de cada pacote
 
-engine → controla o loop principal e estados do jogo.
+engine → controla o loop principal e os estados do jogo.
 
 model → contém a lógica do jogo (tabuleiro, peças, colisões).
 
 view → desenha o jogo na tela (usando Graphics, Canvas, JPanel, etc.).
 
-
 controller → captura e trata as entradas do jogador (KeyListener, etc.).
 
 Main.java → cria o GameEngine e inicia o jogo.
 
-<Para compilar>
-
-<Mostra as pastas e os caminhos>
+⚙️ Comandos Úteis (PowerShell)
+📂 Mostrar as pastas e os caminhos
 Get-ChildItem -Recurse -File
 
-<Compila tudo>
+🧰 Compilar tudo
 javac -d out (Get-ChildItem -Recurse -Filter *.java | ForEach-Object { $_.FullName })
 
-
-// ...existing code...
-
-Board representa a estrutura do tabuleiro
+▶️ Executar o jogo
+java -cp out com.seuNomeOuProjeto.Main
