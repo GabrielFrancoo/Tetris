@@ -1,6 +1,7 @@
 tetris\domain\TetrominoJ.class
 tetris\ui\GamePanel$1.class
 tetris\ui\TelaPrincipal.class
+tetris\ui\NextPiecePanel.class
 tetris\domain\SistemaPontuacao.class
 tetris\domain\Tetromino.class
 tetris\persistence\PartidaDAO.class
@@ -11,6 +12,7 @@ tetris\persistence\ConexaoSQL.class
 tetris\domain\TetrominoO.class
 tetris\ui\ScorePanel.class
 tetris\domain\TetrominoT.class
+tetris\ui\GameOverDialog.class
 tetris\engine\ThreadLoop.class
 tetris\domain\TipoTetromino.class
 tetris\engine\GameEngine.class

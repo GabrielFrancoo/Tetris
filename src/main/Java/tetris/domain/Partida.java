@@ -43,17 +43,46 @@ public class Partida implements Serializable {
         return gameOver;
     }
 
+    private boolean aguardandoAnimacao = false;
+    private int linhasMarcadas = 0;
+    
     public void tick() {
+        if (aguardandoAnimacao) {
+            return; // Aguarda animação terminar
+        }
+        
         if (!tentarMoverBaixo()) {
             tabuleiro.fixarPecaAtual();
-            int linhasCompletas = tabuleiro.removerLinhasCompletas();
-            if (linhasCompletas > 0) {
-                sistemaPontuacao.adicionarLinhas(linhasCompletas);
+            linhasMarcadas = tabuleiro.marcarLinhasCompletas();
+            if (linhasMarcadas > 0) {
+                aguardandoAnimacao = true;
+                // A animação será finalizada pela UI
+            } else {
+                if (!tabuleiro.adicionarNovaPeca()) {
+                    gameOver = true;
+                }
             }
+        }
+    }
+    
+    public void finalizarRemocaoLinhas() {
+        if (aguardandoAnimacao && linhasMarcadas > 0) {
+            tabuleiro.removerLinhasMarcadas();
+            sistemaPontuacao.adicionarLinhas(linhasMarcadas);
+            aguardandoAnimacao = false;
+            linhasMarcadas = 0;
             if (!tabuleiro.adicionarNovaPeca()) {
                 gameOver = true;
             }
         }
+    }
+    
+    public boolean isAguardandoAnimacao() {
+        return aguardandoAnimacao;
+    }
+    
+    public int getLinhasMarcadas() {
+        return linhasMarcadas;
     }
 
     public boolean tentarMoverEsquerda() {

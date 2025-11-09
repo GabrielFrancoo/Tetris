@@ -7,6 +7,7 @@ public class Tabuleiro {
     public static final int ALTURA = 20;
     private final boolean[][] grid = new boolean[ALTURA][LARGURA];
     private Tetromino pecaAtual;
+    private Tetromino proximaPeca;
 
     public boolean[][] getGrid() { 
         return grid; 
@@ -66,9 +67,26 @@ public class Tabuleiro {
     public Tetromino getPecaAtual() {
         return pecaAtual;
     }
+    
+    public Tetromino getProximaPeca() {
+        return proximaPeca;
+    }
 
     public boolean adicionarNovaPeca() {
-        pecaAtual = TipoTetromino.aleatorio().criar();
+        // Se já existe próxima peça, usa ela
+        if (proximaPeca != null) {
+            pecaAtual = proximaPeca;
+            proximaPeca = null;
+        } else {
+            // Primeira peça do jogo
+            pecaAtual = TipoTetromino.aleatorio().criar();
+        }
+        
+        // Gera a próxima peça
+        proximaPeca = TipoTetromino.aleatorio().criar();
+        proximaPeca.setPosicao(new Posicao(0, 0)); // Posição para preview (não importa)
+        
+        // Posiciona a peça atual
         pecaAtual.setPosicao(new Posicao(LARGURA / 2 - 2, -1));
         return posicaoValida(pecaAtual);
     }
@@ -80,6 +98,33 @@ public class Tabuleiro {
         }
     }
 
+    private boolean[] linhasParaRemover = new boolean[ALTURA];
+    
+    public int marcarLinhasCompletas() {
+        int eliminadas = 0;
+        for (int y = 0; y < ALTURA; y++) {
+            linhasParaRemover[y] = linhaCompleta(y);
+            if (linhasParaRemover[y]) {
+                eliminadas++;
+            }
+        }
+        return eliminadas;
+    }
+    
+    public void removerLinhasMarcadas() {
+        for (int y = ALTURA - 1; y >= 0; y--) {
+            if (linhasParaRemover[y]) {
+                eliminarLinha(y);
+                linhasParaRemover[y] = false;
+                y++; // rechecagem após shift
+            }
+        }
+    }
+    
+    public boolean[] getLinhasParaRemover() {
+        return linhasParaRemover;
+    }
+    
     public int removerLinhasCompletas() {
         int eliminadas = 0;
         for (int y = ALTURA - 1; y >= 0; y--) {

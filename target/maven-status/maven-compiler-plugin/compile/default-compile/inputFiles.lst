@@ -1,3 +1,4 @@
+C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\ui\NextPiecePanel.java
 C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\domain\Partida.java
 C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\ui\GamePanel.java
 C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\domain\TetrominoS.java
@@ -6,6 +7,7 @@ C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\domain\Posicao.jav
 C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\ui\ScorePanel.java
 C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\domain\TetrominoL.java
 C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\persistence\PartidaDAO.java
+C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\ui\GameOverDialog.java
 C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\io\ReplayManager.java
 C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\persistence\ConexaoSQL.java
 C:\Users\Gabriel Franco\Documents\Tetris\src\main\java\tetris\domain\TetrominoO.java

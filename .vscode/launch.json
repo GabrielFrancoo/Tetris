@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Tetris",
+            "request": "launch",
+            "mainClass": "tetris.ui.Main",
+            "projectName": "tetris",
+            "args": "",
+            "vmArgs": "",
+            "console": "internalConsole"
+        },
+        {
+            "type": "java",
+            "name": "Launch Tetris (External Console)",
+            "request": "launch",
+            "mainClass": "tetris.ui.Main",
+            "projectName": "tetris",
+            "args": "",
+            "vmArgs": "",
+            "console": "externalTerminal"
+        }
+    ]
+}
+
