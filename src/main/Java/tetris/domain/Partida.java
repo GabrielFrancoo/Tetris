@@ -1,4 +1,4 @@
-package main.Java.tetris.domain;
+package tetris.domain;
 
 import java.io.Serializable;
 
@@ -8,77 +8,72 @@ public class Partida implements Serializable {
     private final Jogador jogador;
     private final Tabuleiro tabuleiro;
     private final SistemaPontuacao sistemaPontuacao;
-    private Tetromino pecaAtual;
-    private boolean gameOver = false;
+    private boolean finalizada;
+    private boolean gameOver;
 
     public Partida(Jogador jogador) {
         this.jogador = jogador;
         this.tabuleiro = new Tabuleiro();
         this.sistemaPontuacao = new SistemaPontuacao();
-        this.pecaAtual = Tetromino.gerarAleatorio();
+        this.finalizada = false;
+        this.gameOver = false;
     }
 
-    public synchronized void tick() {
-        if (gameOver) return;
-
-        // tenta mover para baixo
-        pecaAtual.moverBaixo();
-        if (!tabuleiro.posicaoValida(pecaAtual)) {
-            // reverte subida de fato: moverBaixo já colocou abaixo, então volta uma linha para fixar corretamente
-            pecaAtual.setPosicao(new Posicao(pecaAtual.getPosicao().getX(), pecaAtual.getPosicao().getY() - 1));
-            tabuleiro.fixarPeca(pecaAtual);
-            int linhas = tabuleiro.eliminarLinhasCompletas();
-            sistemaPontuacao.adicionarLinhas(linhas);
-
-            pecaAtual = Tetromino.gerarAleatorio();
-            if (!tabuleiro.posicaoValida(pecaAtual)) gameOver = true;
-        }
+    public Jogador getJogador() {
+        return jogador;
     }
 
-    public Jogador getJogador() { return jogador; }
-    public Tabuleiro getTabuleiro() { return tabuleiro; }
-    public SistemaPontuacao getSistemaPontuacao() { return sistemaPontuacao; }
-    public Tetromino getPecaAtual() { return pecaAtual; }
-    public boolean isGameOver() { return gameOver; }
-
-    // Métodos auxiliares para entrada (tentativa de mover/rotacionar com validação)
-    public synchronized void tentarMoverEsquerda() {
-        pecaAtual.moverEsquerda();
-        if (!tabuleiro.posicaoValida(pecaAtual)) pecaAtual.moverDireita();
+    public Tabuleiro getTabuleiro() {
+        return tabuleiro;
     }
 
-    public synchronized void tentarMoverDireita() {
-        pecaAtual.moverDireita();
-        if (!tabuleiro.posicaoValida(pecaAtual)) pecaAtual.moverEsquerda();
+    public SistemaPontuacao getSistemaPontuacao() {
+        return sistemaPontuacao;
     }
 
-    public synchronized void tentarMoverBaixo() {
-        pecaAtual.moverBaixo();
-        if (!tabuleiro.posicaoValida(pecaAtual)) {
-            // reverte e fixa (como no tick)
-            pecaAtual.setPosicao(new Posicao(pecaAtual.getPosicao().getX(), pecaAtual.getPosicao().getY() - 1));
-            tabuleiro.fixarPeca(pecaAtual);
-            int linhas = tabuleiro.eliminarLinhasCompletas();
-            sistemaPontuacao.adicionarLinhas(linhas);
-            pecaAtual = Tetromino.gerarAleatorio();
-            if (!tabuleiro.posicaoValida(pecaAtual)) gameOver = true;
-        }
+    public boolean isFinalizada() {
+        return finalizada;
     }
 
-    public synchronized void tentarRotacionar() {
-        pecaAtual.rotacionarCW();
-        if (!tabuleiro.posicaoValida(pecaAtual)) {
-            // tenta simples kick: desloca +/-1 horizontalmente
-            pecaAtual.moverDireita();
-            if (!tabuleiro.posicaoValida(pecaAtual)) {
-                pecaAtual.moverEsquerda();
-                pecaAtual.moverEsquerda();
-                if (!tabuleiro.posicaoValida(pecaAtual)) {
-                    // reverte tudo
-                    pecaAtual.moverDireita();
-                    pecaAtual.rotacionarCCW();
-                }
+    public void setFinalizada(boolean finalizada) {
+        this.finalizada = finalizada;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void tick() {
+        if (!tentarMoverBaixo()) {
+            tabuleiro.fixarPecaAtual();
+            int linhasCompletas = tabuleiro.removerLinhasCompletas();
+            if (linhasCompletas > 0) {
+                sistemaPontuacao.adicionarLinhas(linhasCompletas);
+            }
+            if (!tabuleiro.adicionarNovaPeca()) {
+                gameOver = true;
             }
         }
     }
+
+    public boolean tentarMoverEsquerda() {
+        return tabuleiro.moverPecaAtualEsquerda();
+    }
+
+    public boolean tentarMoverDireita() {
+        return tabuleiro.moverPecaAtualDireita();
+    }
+
+    public boolean tentarMoverBaixo() {
+        return tabuleiro.moverPecaAtualBaixo();
+    }
+
+    public boolean tentarRotacionar() {
+        return tabuleiro.rotacionarPecaAtual();
+    }
+
+    public Tetromino getPecaAtual() {
+        return tabuleiro.getPecaAtual();
+    }
 }
+

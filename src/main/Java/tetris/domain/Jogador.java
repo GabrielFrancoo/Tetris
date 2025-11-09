@@ -1,9 +1,9 @@
-package main.Java.tetris.domain;
+package tetris.domain;
 
 import java.util.UUID;
 
 public class Jogador {
-    private final UUID id;
+    private UUID id;
     private String nome;
 
     public Jogador(String nome) {
@@ -11,12 +11,22 @@ public class Jogador {
         this.nome = nome;
     }
 
-    public UUID getId() { return id; }
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    // Construtor para carregar do banco de dados
+    public Jogador(UUID id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 
-    @Override
-    public String toString() {
-        return "Jogador{id=" + id + ", nome='" + nome + "'}";
+    public UUID getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }
+

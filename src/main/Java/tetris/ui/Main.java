@@ -1,7 +1,7 @@
-package main.Java.tetris.ui;
+package tetris.ui;
 
-import main.Java.tetris.domain.Jogador;
-import main.Java.tetris.domain.Partida;
+import tetris.domain.Jogador;
+import tetris.domain.Partida;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,3 +11,4 @@ public class Main {
         tela.iniciar();
     }
 }
+

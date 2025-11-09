@@ -1,4 +1,4 @@
-package main.Java.tetris.io;
+package tetris.io;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,12 +9,17 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.Java.tetris.domain.Partida;
+import tetris.domain.Partida;
 
 public class ReplayManager {
     private static final String REPLAY_FILE = "replay_tetris.dat";
 
     public static void salvarReplay(List<Partida> historico) {
+        if (historico == null || historico.isEmpty()) {
+            System.out.println("[REPLAY] Nenhum histórico para salvar");
+            return;
+        }
+        
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(REPLAY_FILE))) {
             oos.writeObject(historico);
             System.out.println("[REPLAY] Salvo: " + historico.size() + " frames");
@@ -39,10 +44,22 @@ public class ReplayManager {
     }
 
     public static void reproduzir(List<Partida> historico, int delayMs) {
+        if (historico == null || historico.isEmpty()) {
+            System.out.println("[REPLAY] Nenhum histórico para reproduzir");
+            return;
+        }
+        
         for (int i = 0; i < historico.size(); i++) {
             System.out.println("Frame " + i + ": Pontos = " + historico.get(i).getSistemaPontuacao().getPontos());
-            try { Thread.sleep(delayMs); } catch (InterruptedException ignored) {}
+            try { 
+                Thread.sleep(delayMs); 
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.out.println("[REPLAY] Reprodução interrompida");
+                return;
+            }
         }
         System.out.println("[REPLAY] Reprodução concluída");
     }
 }
+

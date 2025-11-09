@@ -1,4 +1,4 @@
-package main.Java.tetris.domain;
+package tetris.domain;
 
 public final class Posicao {
     private final int x;
@@ -24,3 +24,4 @@ public final class Posicao {
     public int getX() { return x; }
     public int getY() { return y; }
 }
+

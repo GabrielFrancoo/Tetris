@@ -1,4 +1,4 @@
-package main.Java.tetris.domain;
+package tetris.domain;
 
 import java.awt.Color;
 
@@ -15,8 +15,9 @@ public class TetrominoO extends Tetromino {
 
     // O não rotaciona (mantém a mesma forma)
     @Override
-    public void rotacionarCW() { /* noop */ }
+    public void rotacionar() { /* noop */ }
 
     @Override
-    public void rotacionarCCW() { /* noop */ }
+    public void rotacionarReverso() { /* noop */ }
 }
+

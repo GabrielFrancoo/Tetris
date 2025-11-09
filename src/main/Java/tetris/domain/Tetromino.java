@@ -1,7 +1,6 @@
-package main.Java.tetris.domain;
+package tetris.domain;
 
 import java.awt.Color;
-import java.util.Random;
 
 /**
  * Classe base para Tetrominos. Usa matrizes 4x4 para formas e fornece
@@ -17,11 +16,11 @@ public class Tetromino {
         posicao = new Posicao(3, -1); // posição inicial (acima do topo)
     }
 
-    public void rotacionarCW() {
+    public void rotacionar() {
         forma = rotateCW(forma);
     }
 
-    public void rotacionarCCW() {
+    public void rotacionarReverso() {
         forma = rotateCCW(forma);
     }
 
@@ -61,14 +60,5 @@ public class Tetromino {
                 r[n - 1 - j][i] = m[i][j];
         return r;
     }
-
-    // Factory method para gerar um tetromino aleatório (instâncias concretas)
-    public static Tetromino gerarAleatorio() {
-        Tetromino[] tipos = new Tetromino[] {
-            new TetrominoI(), new TetrominoO(), new TetrominoT(),
-            new TetrominoS(), new TetrominoZ(), new TetrominoJ(),
-            new TetrominoL()
-        };
-        return tipos[new Random().nextInt(tipos.length)];
-    }
 }
+

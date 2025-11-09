@@ -1,4 +1,4 @@
-package main.Java.tetris.domain;
+package tetris.domain;
 
 import java.awt.Color;
 
@@ -13,3 +13,4 @@ public class TetrominoJ extends Tetromino {
         };
     }
 }
+

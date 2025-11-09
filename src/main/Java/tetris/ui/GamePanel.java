@@ -1,16 +1,18 @@
-package main.Java.tetris.ui;
+package tetris.ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
-import main.Java.tetris.domain.Tabuleiro;
-import main.Java.tetris.domain.Tetromino;
+import tetris.domain.Tabuleiro;
+import tetris.domain.Tetromino;
 
 public class GamePanel extends JPanel {
-    private static final int TAM_CELULA = 30;
+    private static final int TAM_CELULA = 35;
     private Tabuleiro tabuleiro;
     private Tetromino pecaAtual;
 
@@ -19,12 +21,25 @@ public class GamePanel extends JPanel {
         this.pecaAtual = pecaAtual;
         setPreferredSize(new Dimension(Tabuleiro.LARGURA * TAM_CELULA, Tabuleiro.ALTURA * TAM_CELULA));
         setBackground(Color.BLACK);
+        setFocusable(true); // Permite receber foco para eventos de teclado
+        
+        // Garante que o painel recupere o foco quando clicado
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                requestFocusInWindow();
+            }
+        });
     }
 
     public void atualizar(Tabuleiro tabuleiro, Tetromino pecaAtual) {
         this.tabuleiro = tabuleiro;
         this.pecaAtual = pecaAtual;
         repaint();
+        // Mantém o foco para capturar eventos de teclado
+        if (!hasFocus()) {
+            requestFocusInWindow();
+        }
     }
 
     @Override
@@ -66,3 +81,4 @@ public class GamePanel extends JPanel {
             g.drawLine(0, y * TAM_CELULA, Tabuleiro.LARGURA * TAM_CELULA, y * TAM_CELULA);
     }
 }
+
